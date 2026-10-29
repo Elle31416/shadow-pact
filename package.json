@@ -1,0 +1,13 @@
+{
+  "name": "shadow-pact",
+  "version": "1.0.0",
+  "description": "Minimalist 2-player real-time cooperative shadow puzzle — one lamp, one wall, two shadows in sync.",
+  "main": "server.js",
+  "private": true,
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

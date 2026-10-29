@@ -1,5 +1,9 @@
 # SHADOW PACT
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Elle31416/shadow-pact)
+
+**One-click deploy → [Render Blueprint](https://render.com/deploy?repo=https://github.com/Elle31416/shadow-pact)** · [Live repo](https://github.com/Elle31416/shadow-pact)
+
 A minimalist **2-player real-time cooperative puzzle**. One shared screen, one lamp,
 one wall. Odd geometric pieces cast shadows — **Blue** drags and rotates the pieces,
 **Red** slides the lamp up and down the left edge, which rescales and distorts *every
@@ -32,6 +36,25 @@ admitted mid-match.
 | `DEBUG_IO`  | off     | set to `1` to log every inbound message   |
 
 Appending `?dbg=1` to the URL logs client-side pointer handling.
+
+---
+
+## Deploy (Render Blueprint)
+
+`render.yaml` is the whole blueprint: one free-tier Node web service that serves the
+game **and** runs the WebSocket matchmaker on the same port — no databases, no env
+vars to configure. Click the button above → authorize GitHub → done; `autoDeploy`
+redeploys on every push to `main`.
+
+Notes:
+- **WebSockets work out of the box** on Render's proxy (the server pings every 20 s
+  to hold connections open; dropped sockets auto-reconnect with backoff and players
+  re-queue cleanly).
+- Render injects `PORT` — `server.js` reads `process.env.PORT`.
+- **Free instances sleep** after ~15 min of inactivity: the first visitor after a
+  cold start waits ~30–50 s (the queue screen shows *reconnecting* meanwhile).
+  Switch `plan: free` → `starter` in `render.yaml` for always-on.
+- Matchmaking needs two players: share your `*.onrender.com` link on two devices.
 
 ---
 

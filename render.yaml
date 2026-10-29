@@ -1,0 +1,21 @@
+# Render Blueprint — SHADOW PACT
+# One-click deploy:
+#   https://render.com/deploy?repo=https://github.com/Elle31416/shadow-pact
+#
+# Single Node web service: serves the game and runs the WebSocket
+# matchmaker / authoritative sync on the SAME port (Render's proxy
+# passes WebSocket upgrades natively; our server pings every 20s to
+# keep connections alive through the proxy).
+services:
+  - type: web
+    name: shadow-pact
+    runtime: node
+    plan: free
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /
+    autoDeploy: true
+    # PORT is injected by Render — server.js reads process.env.PORT.
+    # Free instances sleep after ~15 min of inactivity (cold start on
+    # first visit; clients auto-reconnect). Switch plan: starter for
+    # always-on.
